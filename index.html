@@ -23,6 +23,9 @@
             border-radius: 0.75rem; /* Zaoblené rohy pro obsahové sekce */
             margin-top: 2rem; /* Přidání horního okraje pro oddělení od textu záhlaví */
             width: 100%; /* Zajištění, že zabírá celou šířku v rámci svého kontejneru */
+            max-width: 90%; /* Zúžení celé sekce s dlaždicemi o 10% */
+            margin-left: auto; /* Vycentrování sekce */
+            margin-right: auto; /* Vycentrování sekce */
         }
         /* Sekce blogu a informací jsou vždy viditelné */
         .blog-info-section {
@@ -53,6 +56,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Jemnější, rozptýlenější stín */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Plynulý přechod pro efekty při najetí myší */
             border-radius: 0.75rem; /* Zaoblené rohy pro obsahové karty */
+            /* Odebrány max-width a margin: auto, aby se karty roztáhly v novém užším kontejneru */
         }
         .content-card:hover {
             transform: scale(1.05); /* Zvětšení při najetí myší */
