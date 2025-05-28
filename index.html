@@ -9,65 +9,65 @@
         /* Custom font for a modern, techy look */
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
         body {
-            font-family: 'Orbitron', sans-serif; /* Changed font to Orbitron */
-            background-color: #eef2f6; /* Lighter, modern background */
-            color: #2d3748; /* Darker text for better contrast */
-            /* Ensure body takes full height for content distribution */
+            font-family: 'Orbitron', sans-serif; /* Změněno písmo na Orbitron */
+            background-color: #eef2f6; /* Světlejší, moderní pozadí */
+            color: #2d3748; /* Tmavší text pro lepší kontrast */
+            /* Zajištění, že tělo zabírá celou výšku pro rozložení obsahu */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        /* Hide content sections by default */
+        /* Skrytí obsahových sekcí ve výchozím nastavení */
         .content-section {
             display: none;
-            border-radius: 0.75rem; /* Rounded corners for content sections (still applies to the container, but less visible) */
-            margin-top: 2rem; /* Add some top margin to separate from the header text */
-            width: 100%; /* Ensure it takes full width within its container */
+            border-radius: 0.75rem; /* Zaoblené rohy pro obsahové sekce */
+            margin-top: 2rem; /* Přidání horního okraje pro oddělení od textu záhlaví */
+            width: 100%; /* Zajištění, že zabírá celou šířku v rámci svého kontejneru */
         }
-        /* New styles for buttons within the header */
+        /* Nové styly pro tlačítka v záhlaví */
         .header-button {
-            background-color: transparent; /* Transparent background for blending */
-            color: #ffffff; /* White text for header buttons */
-            backdrop-filter: blur(5px); /* Subtle blur for a frosted glass effect */
+            background-color: transparent; /* Průhledné pozadí pro splynutí */
+            color: #ffffff; /* Bílý text pro tlačítka záhlaví */
+            backdrop-filter: blur(5px); /* Jemné rozostření pro efekt matného skla */
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-            font-size: 0.65rem; /* Custom smaller font size for buttons */
+            font-size: 0.65rem; /* Vlastní menší velikost písma pro tlačítka */
         }
         .header-button.active-button {
-            background-color: rgba(255, 255, 255, 0.2); /* Slightly opaque white */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Softer, more diffused shadow */
-            border: none; /* Ensure no hard border */
+            background-color: rgba(255, 255, 255, 0.2); /* Lehce neprůhledná bílá */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Jemnější, rozptýlenější stín */
+            border: none; /* Zajištění bez tvrdého okraje */
         }
-        /* Styles for transparent content cards with frosted glass effect */
+        /* Styly pro průhledné obsahové karty s efektem matného skla */
         .content-card {
-            background-color: #312E81; /* Changed to solid indigo-800 */
-            backdrop-filter: blur(5px); /* Apply blur to the background */
-            color: #ffffff; /* White text for better contrast on blurred background */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Softer, more diffused shadow */
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition for hover effects */
-            border-radius: 0.75rem; /* Rounded corners for content cards */
+            background-color: #312E81; /* Změněno na plnou indigo-800 */
+            backdrop-filter: blur(5px); /* Použití rozostření na pozadí */
+            color: #ffffff; /* Bílý text pro lepší kontrast na rozostřeném pozadí */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Jemnější, rozptýlenější stín */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Plynulý přechod pro efekty při najetí myší */
+            border-radius: 0.75rem; /* Zaoblené rohy pro obsahové karty */
         }
         .content-card:hover {
-            transform: scale(1.05); /* Enlarge on hover */
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
+            transform: scale(1.05); /* Zvětšení při najetí myší */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* Výraznější stín při najetí myší */
         }
 
-        /* Styles for the new blog cards and additional info cards */
+        /* Styly pro nové blogové karty a karty s dalšími informacemi */
         .blog-card, .info-card {
-            background-color: #ffffff; /* White background for cards */
-            color: #2d3748; /* Dark text for cards */
-            border-radius: 0.75rem; /* Rounded corners */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            background-color: #ffffff; /* Bílé pozadí pro karty */
+            color: #2d3748; /* Tmavý text pro karty */
+            border-radius: 0.75rem; /* Zaoblené rohy */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Jemný stín */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            overflow: hidden; /* Ensures image corners are rounded */
+            overflow: hidden; /* Zajišťuje zaoblené rohy obrázku */
         }
         .blog-card:hover, .info-card:hover {
-            transform: translateY(-5px); /* Lift on hover */
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+            transform: translateY(-5px); /* Zvednutí při najetí myší */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Výraznější stín */
         }
         .blog-card img {
             width: 100%;
-            height: 180px; /* Fixed height for blog images */
-            object-fit: cover; /* Ensures images cover the area */
+            height: 180px; /* Pevná výška pro obrázky blogu */
+            object-fit: cover; /* Zajišťuje, že obrázky pokryjí oblast */
             border-top-left-radius: 0.75rem;
             border-top-right-radius: 0.75rem;
         }
@@ -75,14 +75,14 @@
             padding: 1.5rem;
         }
         .blog-card h3, .info-card h3 {
-            font-weight: 600; /* Semi-bold for titles */
-            font-size: 1.25rem; /* Larger title font */
+            font-weight: 600; /* Polotučný pro názvy */
+            font-size: 1.25rem; /* Větší písmo názvu */
             margin-bottom: 0.5rem;
         }
         .blog-card p, .info-card p {
             font-size: 0.95rem;
             line-height: 1.5;
-            color: #4a5568; /* Slightly lighter text for excerpt */
+            color: #4a5568; /* Lehce světlejší text pro úryvek */
         }
     </style>
 </head>
@@ -91,19 +91,42 @@
     <header class="w-full min-h-screen flex flex-col items-center justify-between text-white text-center px-8 pb-8 bg-gradient-to-br from-indigo-700 to-purple-900 shadow-xl relative overflow-hidden">
         <div class="absolute inset-0 bg-black opacity-30"></div>
         <div class="relative z-10 w-full flex flex-col items-center h-full">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full pt-8 justify-end">
-                <button id="gaming-pc-btn" onclick="showCategory('gaming-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300 active-button">
-                    i7 13980HX<br>RTX 4090 laptop<br>32 GB DDR5 4800
-                </button>
-                <button id="workstation-pc-btn" onclick="showCategory('workstation-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
-                    7800X3D<br>RTX 4080 Super<br>32 GB RAM DDR5 6000
-                </button>
-                <button id="multimedia-pc-btn" onclick="showCategory('multimedia-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
-                    i5 10400<br>Integrated<br>16 GB DDR4 2666
-                </button>
-                <button id="office-pc-btn" onclick="showCategory('office-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
-                    i7 10750H<br>RTX 2070 Super laptop<br>16 GB DDR4 2666
-                </button>
+            <div class="w-full flex justify-between items-center pt-8 px-4">
+                <div class="flex items-center space-x-2">
+                    <svg width="180" height="80" viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="line-glossy-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#E0F2F7" /> <stop offset="100%" stop-color="#87CEEB" /> </linearGradient>
+                        </defs>
+                        <path d="M15 45 A 25 25 0 1 1 55 45" stroke="url(#line-glossy-gradient)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <line x1="20" y1="40" x2="20" y2="45" stroke="#ADD8E6" stroke-width="1"/>
+                        <line x1="25" y1="30" x2="27" y2="35" stroke="#ADD8E6" stroke-width="1" transform="rotate(-15 25 30)"/>
+                        <line x1="35" y1="25" x2="35" y2="28" stroke="#ADD8E6" stroke-width="1"/>
+                        <line x1="45" y1="30" x2="43" y2="35" stroke="#ADD8E6" stroke-width="1" transform="rotate(15 45 30)"/>
+                        <line x1="50" y1="40" x2="50" y2="45" stroke="#ADD8E6" stroke-width="1"/>
+
+                        <line x1="35" y1="45" x2="45" y2="35" stroke="white" stroke-width="2" stroke-linecap="round" transform="rotate(-45 35 45)"/>
+                        <circle cx="35" cy="45" r="2" fill="white"/>
+
+                        <text x="65" y="25" dominant-baseline="middle" text-anchor="start" font-family="'Orbitron', sans-serif" font-size="28" font-weight="bold" fill="white">W</text>
+                        <text x="65" y="45" dominant-baseline="middle" text-anchor="start" font-family="'Orbitron', sans-serif" font-size="18" fill="white">&lt; Br &gt;</text>
+                        <text x="65" y="65" dominant-baseline="middle" text-anchor="start" font-family="'Orbitron', sans-serif" font-size="28" font-weight="bold" fill="white">Blog</text>
+                    </svg>
+                </div>
+                <div class="flex flex-wrap justify-end gap-3">
+                    <button id="gaming-pc-btn" onclick="showCategory('gaming-pc')" class="header-button w-36 font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300 active-button">
+                        i7 13980HX<br>RTX 4090 laptop<br>32 GB DDR5 4800
+                    </button>
+                    <button id="workstation-pc-btn" onclick="showCategory('workstation-pc')" class="header-button w-36 font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
+                        7800X3D<br>RTX 4080 Super<br>32 GB RAM DDR5 6000
+                    </button>
+                    <button id="multimedia-pc-btn" onclick="showCategory('multimedia-pc')" class="header-button w-36 font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
+                        i5 10400<br>Integrated<br>16 GB DDR4 2666
+                    </button>
+                    <button id="office-pc-btn" onclick="showCategory('office-pc')" class="header-button w-36 font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
+                        i7 10750H<br>RTX 2070 Super laptop<br>16 GB DDR4 2666
+                    </button>
+                </div>
             </div>
 
             <div class="max-w-4xl w-full flex flex-col items-center justify-center flex-grow pt-16 mb-8">
@@ -115,7 +138,7 @@
                 </p>
             </div>
 
-            <div id="gaming-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div id="gaming-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
                     <div class="bg-white rounded-full p-2 mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
@@ -211,7 +234,7 @@
                 </div>
             </div>
 
-            <div id="workstation-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div id="workstation-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
                     <div class="bg-white rounded-full p-2 mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
@@ -292,8 +315,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Firefox</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(24 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">24</span>
+                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(25 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">25</span>
                         </div>
                     </div>
                 </div>
@@ -307,7 +330,7 @@
                 </div>
             </div>
 
-            <div id="multimedia-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div id="multimedia-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
                     <div class="bg-white rounded-full p-2 mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
@@ -323,8 +346,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Edge</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(19 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">19</span>
+                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(28 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">28</span>
                         </div>
                     </div>
                 </div>
@@ -335,8 +358,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Chrome</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(18 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">18</span>
+                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(27 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">27</span>
                         </div>
                     </div>
                 </div>
@@ -364,8 +387,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Brave</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(19 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">19</span>
+                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(26 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">26</span>
                         </div>
                     </div>
                 </div>
@@ -376,8 +399,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Opera</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(17 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">17</span>
+                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(24 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">24</span>
                         </div>
                     </div>
                 </div>
@@ -388,8 +411,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Firefox</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(11 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">11</span>
+                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(20 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">20</span>
                         </div>
                     </div>
                 </div>
@@ -403,7 +426,7 @@
                 </div>
             </div>
 
-            <div id="office-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div id="office-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
                     <div class="bg-white rounded-full p-2 mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
@@ -419,8 +442,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Edge</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(23 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">23</span>
+                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(22 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">22</span>
                         </div>
                     </div>
                 </div>
@@ -431,8 +454,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Chrome</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(22 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">22</span>
+                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(21 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">21</span>
                         </div>
                     </div>
                 </div>
@@ -460,8 +483,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Brave</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(21 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">21</span>
+                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(20 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">20</span>
                         </div>
                     </div>
                 </div>
@@ -472,8 +495,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Opera</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(19 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">19</span>
+                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(18 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">18</span>
                         </div>
                     </div>
                 </div>
@@ -484,8 +507,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Firefox</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(11 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">11</span>
+                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(15 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">15</span>
                         </div>
                     </div>
                 </div>
@@ -498,131 +521,92 @@
                     <p class="text-lg font-normal mt-1 text-white">Netestováno</p>
                 </div>
             </div>
-
-            <p class="mt-8 text-sm text-center text-white">
-                Testováno 28. května 2025, verze prohlížečů jsou aktuální k datu testování.
-            </p>
         </div>
     </header>
 
-    <section class="bg-white py-12 px-8">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Dodatečné informace o prohlížečích</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8 text-indigo-800">Proč je Speedometer 3.1 důležitý?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="info-card p-6">
-                    <h3 class="text-xl font-semibold mb-2">Bezpečnost a soukromí</h3>
-                    <p class="text-sm text-gray-700">Moderní webové prohlížeče neustále inovují v oblasti bezpečnosti a soukromí. Nabízejí funkce jako ochrana proti sledování, blokování nebezpečných stránek a integrované VPN služby. Je důležité si vybrat prohlížeč, který nejlépe odpovídá vašim požadavkům na ochranu dat.</p>
+                    <h3>Realistické scénáře</h3>
+                    <p class="mt-2">Speedometer 3.1 simuluje reálné uživatelské interakce, jako je přidávání položek do seznamů úkolů, úpravy textu a manipulace s daty. To poskytuje přesnější obraz o tom,jak se prohlížeč chová při každodenním používání.</p>
                 </div>
                 <div class="info-card p-6">
-                    <h3 class="text-xl font-semibold mb-2">Rozšíření a přizpůsobení</h3>
-                    <p class="text-sm text-gray-700">Většina prohlížečů podporuje širokou škálu rozšíření a doplňků, které mohou výrazně zlepšit vaši produktivitu a uživatelský zážitek. Od nástrojů pro správu hesel po blokátory reklam, možnosti přizpůsobení jsou téměř neomezené. Před instalací rozšíření vždy zkontrolujte jejich důvěryhodnost.</p>
+                    <h3>Vývojářské nástroje</h3>
+                    <p class="mt-2">Test zahrnuje simulace interakcí s populárními frameworky a knihovnami, jako jsou React, Angular a Vue.js, což je klíčové pro vývojáře webových aplikací.</p>
                 </div>
                 <div class="info-card p-6">
-                    <h3 class="text-xl font-semibold mb-2">Spotřeba zdrojů</h3>
-                    <p class="text-sm text-gray-700">Výkon prohlížeče není jen o rychlosti JavaScriptu, ale také o spotřebě paměti a procesoru. Pro uživatele s méně výkonnými počítači může být klíčové zvolit prohlížeč, který je optimalizován pro nižší spotřebu zdrojů, aby nedocházelo ke zpomalení systému.</p>
-                </div>
-                <div class="info-card p-6">
-                    <h3 class="text-xl font-semibold mb-2">Synchronizace napříč zařízeními</h3>
-                    <p class="text-sm text-gray-700">Mnoho prohlížečů nabízí synchronizaci dat (záložky, historie, hesla) napříč všemi vašimi zařízeními. To zajišťuje plynulý přechod mezi počítačem, tabletem a telefonem a udržuje vaše data aktuální a dostupná, ať jste kdekoli.</p>
+                    <h3>Komplexní měření</h3>
+                    <p class="mt-2">Měří dobu odezvy prohlížeče na různé akce, což pomáhá identifikovat úzká hrdla a optimalizovat výkon webových stránek.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="bg-white py-12 px-8">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Náš Blog</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section>
+            <h2 class="text-3xl font-bold text-center mb-8 text-indigo-800">Nejnovější články a analýzy</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="blog-card">
-                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+1" alt="Blog Image 1">
+                    <img src="https://placehold.co/400x180/7e22ce/ffffff?text=Performance+Tips" alt="Performance Tips">
                     <div class="blog-card-content">
-                        <h3>Jak optimalizovat svůj prohlížeč pro maximální rychlost</h3>
-                        <p class="text-sm">Zjistěte, jaké jednoduché kroky můžete podniknout k výraznému zrychlení vašeho webového prohlížeče a zlepšení celkového výkonu. Odstranění zbytečných rozšíření, správa mezipaměti a další tipy.</p>
+                        <h3>Jak optimalizovat prohlížeč pro maximální výkon</h3>
+                        <p class="mt-2">Prozkoumejte tipy a triky, jak nastavit svůj prohlížeč pro nejlepší možný výkon. Od rozšíření po nastavení soukromí, vše, co potřebujete vědět.</p>
+                        <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
                     </div>
                 </div>
-
                 <div class="blog-card">
-                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+2" alt="Blog Image 2">
+                    <img src="https://placehold.co/400x180/7e22ce/ffffff?text=Browser+Comparison" alt="Browser Comparison">
+                    <div class="blog-card-content">
+                        <h3>Chrome vs. Edge: Který prohlížeč vede v roce 2024?</h3>
+                        <p class="mt-2">Podrobná analýza a srovnání dvou nejpopulárnějších prohlížečů na základě nejnovějších testů a uživatelských zkušeností.</p>
+                        <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <img src="https://placehold.co/400x180/7e22ce/ffffff?text=Future+of+Browsers" alt="Future of Browsers">
                     <div class="blog-card-content">
                         <h3>Budoucnost webových prohlížečů: Co nás čeká?</h3>
-                        <p class="text-sm">Podívejte se s námi na nejnovější trendy a inovace ve vývoji webových prohlížečů. Od umělé inteligence po vylepšené zabezpečení, budoucnost je plná překvapení.</p>
-                    </div>
-                </div>
-
-                <div class="blog-card">
-                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+3" alt="Blog Image 3">
-                    <div class="blog-card-content">
-                        <h3>Proč je Speedometer 3.1 klíčový pro benchmarky prohlížečů</h3>
-                        <p class="text-sm">Ponořte se do detailů testu Speedometer 3.1 a zjistěte, proč je tak důležitý pro objektivní hodnocení výkonu webových prohlížečů. Pochopte, co přesně měří.</p>
-                    </div>
-                </div>
-
-                <div class="blog-card">
-                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+4" alt="Blog Image 4">
-                    <div class="blog-card-content">
-                        <h3>Tipy a triky pro bezpečné prohlížení webu</h3>
-                        <p class="text-sm">Zvyšte svou online bezpečnost s našimi praktickými tipy. Jak se vyhnout phishingovým útokům, chránit svá data a bezpečně procházet internet.</p>
-                    </div>
-                </div>
-
-                <div class="blog-card">
-                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+5" alt="Blog Image 5">
-                    <div class="blog-card-content">
-                        <h3>Historie webových prohlížečů: Od počátků po současnost</h3>
-                        <p class="text-sm">Projděte si fascinující historii webových prohlížečů, od prvních textových rozhraní až po dnešní moderní a komplexní aplikace.</p>
-                    </div>
-                </div>
-
-                <div class="blog-card">
-                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+6" alt="Blog Image 6">
-                    <div class="blog-card-content">
-                        <h3>Jak vybrat ten správný prohlížeč pro vaše potřeby</h3>
-                        <p class="text-sm">Průvodce výběrem webového prohlížeče, který nejlépe vyhovuje vašemu pracovnímu stylu, preferencím soukromí a hardwarovým specifikacím.</p>
+                        <p class="mt-2">Pohled do budoucna webových prohlížečů, nové technologie a inovace, které změní způsob, jakým surfujeme po internetu.</p>
+                        <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <footer class="mt-10 text-center text-gray-500 text-sm pb-4">
-        &copy; 2025 Srovnání prohlížečů a PC sestav. Všechna práva vyhrazena.
+    <footer class="w-full bg-gray-800 text-white text-center p-4 mt-8">
+        <p>&copy; 2024 Web Browser Performance Speedometer. Všechna práva vyhrazena.</p>
     </footer>
 
     <script>
-        // Function to show the selected category and hide others
         function showCategory(categoryId) {
-            // Get all content sections
-            const sections = document.querySelectorAll('.content-section');
-            // Hide all sections
-            sections.forEach(section => {
+            // Skrytí všech obsahových sekcí
+            document.querySelectorAll('.content-section').forEach(section => {
                 section.style.display = 'none';
             });
 
-            // Get all buttons
-            const buttons = document.querySelectorAll('.grid button');
-            // Remove active-button class from all buttons
-            buttons.forEach(button => {
+            // Odebrání aktivní třídy ze všech tlačítek
+            document.querySelectorAll('.header-button').forEach(button => {
                 button.classList.remove('active-button');
             });
 
-            // Show the selected section
+            // Zobrazení vybrané obsahové sekce
             const selectedSection = document.getElementById(categoryId);
             if (selectedSection) {
-                selectedSection.style.display = 'grid'; // Use grid to maintain layout
+                selectedSection.style.display = 'grid'; // Použití grid pro rozložení
             }
 
-            // Add active-button class to the clicked button
+            // Přidání aktivní třídy k kliknutému tlačítku
             const clickedButton = document.getElementById(categoryId + '-btn');
             if (clickedButton) {
                 clickedButton.classList.add('active-button');
             }
         }
 
-        // Show the default category on page load
-        window.onload = function() {
+        // Zobrazení výchozí kategorie při načtení stránky
+        document.addEventListener('DOMContentLoaded', () => {
             showCategory('gaming-pc');
-        };
+        });
     </script>
-
 </body>
 </html>
