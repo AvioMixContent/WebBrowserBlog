@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Browser Performance Speedometer 3.1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a modern, techy look */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Orbitron', sans-serif; /* Changed font to Orbitron */
+            background-color: #eef2f6; /* Lighter, modern background */
+            color: #2d3748; /* Darker text for better contrast */
+            /* Ensure body takes full height for content distribution */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Hide content sections by default */
+        .content-section {
+            display: none;
+            border-radius: 0.75rem; /* Rounded corners for content sections (still applies to the container, but less visible) */
+            margin-top: 2rem; /* Add some top margin to separate from the header text */
+            width: 100%; /* Ensure it takes full width within its container */
+        }
+        /* New styles for buttons within the header */
+        .header-button {
+            background-color: transparent; /* Transparent background for blending */
+            color: #ffffff; /* White text for header buttons */
+            backdrop-filter: blur(5px); /* Subtle blur for a frosted glass effect */
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            font-size: 0.65rem; /* Custom smaller font size for buttons */
+        }
+        .header-button.active-button {
+            background-color: rgba(255, 255, 255, 0.2); /* Slightly opaque white */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Softer, more diffused shadow */
+            border: none; /* Ensure no hard border */
+        }
+        /* Styles for transparent content cards with frosted glass effect */
+        .content-card {
+            background-color: #312E81; /* Changed to solid indigo-800 */
+            backdrop-filter: blur(5px); /* Apply blur to the background */
+            color: #ffffff; /* White text for better contrast on blurred background */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Softer, more diffused shadow */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition for hover effects */
+            border-radius: 0.75rem; /* Rounded corners for content cards */
+        }
+        .content-card:hover {
+            transform: scale(1.05); /* Enlarge on hover */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
+        }
+
+        /* Styles for the new blog cards and additional info cards */
+        .blog-card, .info-card {
+            background-color: #ffffff; /* White background for cards */
+            color: #2d3748; /* Dark text for cards */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            overflow: hidden; /* Ensures image corners are rounded */
+        }
+        .blog-card:hover, .info-card:hover {
+            transform: translateY(-5px); /* Lift on hover */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+        }
+        .blog-card img {
+            width: 100%;
+            height: 180px; /* Fixed height for blog images */
+            object-fit: cover; /* Ensures images cover the area */
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+        }
+        .blog-card-content, .info-card-content {
+            padding: 1.5rem;
+        }
+        .blog-card h3, .info-card h3 {
+            font-weight: 600; /* Semi-bold for titles */
+            font-size: 1.25rem; /* Larger title font */
+            margin-bottom: 0.5rem;
+        }
+        .blog-card p, .info-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #4a5568; /* Slightly lighter text for excerpt */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="w-full min-h-screen flex flex-col items-center justify-between text-white text-center px-8 pb-8 bg-gradient-to-br from-indigo-700 to-purple-900 shadow-xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-30"></div>
+        <div class="relative z-10 w-full flex flex-col items-center h-full">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full pt-8 justify-end">
+                <button id="gaming-pc-btn" onclick="showCategory('gaming-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300 active-button">
+                    i7 13980HX<br>RTX 4090 laptop<br>32 GB DDR5 4800
+                </button>
+                <button id="workstation-pc-btn" onclick="showCategory('workstation-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
+                    7800X3D<br>RTX 4080 Super<br>32 GB RAM DDR5 6000
+                </button>
+                <button id="multimedia-pc-btn" onclick="showCategory('multimedia-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
+                    i5 10400<br>Integrated<br>16 GB DDR4 2666
+                </button>
+                <button id="office-pc-btn" onclick="showCategory('office-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
+                    i7 10750H<br>RTX 2070 Super laptop<br>16 GB DDR4 2666
+                </button>
+            </div>
+
+            <div class="max-w-4xl w-full flex flex-col items-center justify-center flex-grow pt-16 mb-8">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-lg">
+                    Web Browser Performance Speedometer 3.1
+                </h1>
+                <p class="text-lg md:text-xl leading-relaxed opacity-90 drop-shadow-md">
+                    Zde naleznete srovnání výkonnostních skóre pro oblíbené webové prohlížeče, získané z testu Speedometer 3.1. Tyto výsledky vám mohou pomoci vybrat nejvhodnější prohlížeč pro vaše potřeby.
+                </p>
+            </div>
+
+            <div id="gaming-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
+                            <defs>
+                                <radialGradient id="b-gaming" cx="161.83" cy="68.91" r="95.38" gradientTransform="matrix(1 0 0 -.95 0 248.84)" gradientUnits="userSpaceOnUse"><stop offset=".72" stop-opacity="0"/><stop offset=".95" stop-opacity=".53"/><stop offset="1"/></radialGradient>
+                                <radialGradient id="d-gaming" cx="-340.29" cy="62.99" r="143.24" gradientTransform="matrix(.15 -.99 -.8 -.12 176.64 -125.4)" gradientUnits="userSpaceOnUse"><stop offset=".76" stop-opacity="0"/><stop offset=".95" stop-opacity=".5"/><stop offset="1"/></radialGradient>
+                                <radialGradient id="e-gaming" cx="113.37" cy="570.21" r="202.43" gradientTransform="matrix(-.04 1 2.13 .08 -1179.54 -106.69)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#35c1f1"/><stop offset=".11" stop-color="#34c1ed"/><stop offset=".23" stop-color="#2fc2df"/><stop offset=".31" stop-color="#2bc3d2"/><stop offset=".67" stop-color="#36c752"/></radialGradient>
+                                <radialGradient id="f-gaming" cx="376.52" cy="567.97" r="97.34" gradientTransform="matrix(.28 .96 .78 -.23 -303.76 -148.5)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#66eb6e"/><stop offset="1" stop-color="#66eb6e" stop-opacity="0"/></radialGradient>
+                                <linearGradient id="a-gaming" x1="63.33" y1="84.03" x2="241.67" y2="84.03" gradientTransform="matrix(1 0 0 -1 0 266)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0c59a4"/><stop offset="1" stop-color="#114a8b"/></linearGradient>
+                                <linearGradient id="c-gaming" x1="157.35" y1="161.39" x2="45.96" y2="40.06" gradientTransform="matrix(1 0 0 -1 0 266)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1b9de2"/><stop offset=".16" stop-color="#1595df"/><stop offset=".67" stop-color="#0680d7"/><stop offset="1" stop-color="#0078d4"/></linearGradient>
+                            </defs>
+                            <path d="M235.68 195.46a93.73 93.73 0 01-10.54 4.71 101.87 101.87 0 01-35.9 6.46c-47.32 0-88.54-32.55-88.54-74.32A31.48 31.48 0 01117.13 105c-42.8 1.8-53.8 46.4-53.8 72.53 0 73.88 68.09 81.37 82.76 81.37 7.91 0 19.84-2.3 27-4.56l1.31-.44a128.34 128.34 0 0066.6-52.8 4 4 0 00-5.32-5.64z" transform="translate(-4.63 -4.92)" fill="url(#a-gaming)"/><path d="M235.68 195.46a93.73 93.73 0 01-10.54 4.71 101.87 101.87 0 01-35.9 6.46c-47.32 0-88.54-32.55-88.54-74.32A31.48 31.48 0 01117.13 105c-42.8 1.8-53.8 46.4-53.8 72.53 0 73.88 68.09 81.37 82.76 81.37 7.91 0 19.84-2.3 27-4.56l1.31-.44a128.34 128.34 0 0066.6-52.8 4 4 0 00-5.32-5.64z" transform="translate(-4.63 -4.92)" style="isolation:isolate" opacity=".35" fill="url(#b-gaming)"/><path d="M110.34 246.34A79.2 79.2 0 0187.6 225a80.72 80.72 0 0129.53-120c3.12-1.47 8.45-4.13 15.54-4a32.35 32.35 0 0125.69 13 31.88 31.88 0 016.36 18.66c0-.21 24.46-79.6-80-79.6-43.9 0-80 41.66-80 78.21a130.15 130.15 0 0012.11 56 128 128 0 00156.38 67.11 75.55 75.55 0 01-62.78-8z" transform="translate(-4.63 -4.92)" fill="url(#c-gaming)"/><path d="M110.34 246.34A79.2 79.2 0 0187.6 225a80.72 80.72 0 0129.53-120c3.12-1.47 8.45-4.13 15.54-4a32.35 32.35 0 0125.69 13 31.88 31.88 0 016.36 18.66c0-.21 24.46-79.6-80-79.6-43.9 0-80 41.66-80 78.21a130.15 130.15 0 0012.11 56 128 128 0 00156.38 67.11 75.55 75.55 0 01-62.78-8z" transform="translate(-4.63 -4.92)" style="isolation:isolate" opacity=".41" fill="url(#d-gaming)"/><path d="M156.94 153.78c-.81 1.05-3.3 2.5-3.3 5.66 0 2.61 1.7 5.12 4.72 7.23 14.38 10 41.49 8.68 41.56 8.68a59.56 59.56 0 0030.27-8.35 61.38 61.38 0 0030.43-52.88c.26-22.41-8-37.31-11.34-43.91-21.19-41.45-66.93-65.29-116.67-65.29a128 128 0 00-128 126.2c.48-36.54 36.8-66.05 80-66.05 3.5 0 23.46.34 42 10.07 16.34 8.58 24.9 18.94 30.85 29.21 6.18 10.67 7.28 24.15 7.28 29.52s-2.74 13.33-7.8 19.91z" transform="translate(-4.63 -4.92)" fill="url(#e-gaming)"/><path d="M156.94 153.78c-.81 1.05-3.3 2.5-3.3 5.66 0 2.61 1.7 5.12 4.72 7.23 14.38 10 41.49 8.68 41.56 8.68a59.56 59.56 0 0030.27-8.35 61.38 61.38 0 0030.43-52.88c.26-22.41-8-37.31-11.34-43.91-21.19-41.45-66.93-65.29-116.67-65.29a128 128 0 00-128 126.2c.48-36.54 36.8-66.05 80-66.05 3.5 0 23.46.34 42 10.07 16.34 8.58 24.9 18.94 30.85 29.21 6.18 10.67 7.28 24.15 7.28 29.52s-2.74 13.33-7.8 19.91z" transform="translate(-4.63 -4.92)" fill="url(#f-gaming)"/></svg>
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Edge</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(36 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">36</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://www.google.com/chrome/static/images/chrome-logo.svg" alt="Chrome Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Chrome</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(35 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">35</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <svg id="Layer_1-gaming" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 436.49 511.97" class="w-16 h-16 object-contain">
+                            <defs>
+                                <style>.cls-1-gaming{fill:url(#linear-gradient-gaming);}.cls-2-gaming{fill:#fff;}</style>
+                                <linearGradient id="linear-gradient-gaming" x1="-18.79" y1="359.73" x2="194.32" y2="359.73" gradientTransform="matrix(2.05, 0, 0, -2.05, 38.49, 992.77)" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-color="#f1562b"/>
+                                    <stop offset="0.3" stop-color="#f1542b"/>
+                                    <stop offset="0.41" stop-color="#f04d2a"/>
+                                    <stop offset="0.49" stop-color="#ef4229"/>
+                                    <stop offset="0.5" stop-color="#ef4029"/>
+                                    <stop offset="0.56" stop-color="#e83e28"/>
+                                    <stop offset="0.67" stop-color="#e13c26"/>
+                                    <stop offset="1" stop-color="#df3c26"/>
+                                </linearGradient>
+                            </defs>
+                            <title>brave-browser</title>
+                            <path class="cls-1-gaming" d="M436.49,165.63,420.7,122.75l11-24.6A8.47,8.47,0,0,0,430,88.78L400.11,58.6a48.16,48.16,0,0,0-50.23-11.66l-8.19,2.89L296.09.43,218.25,0,140.4.61,94.85,50.41l-8.11-2.87A48.33,48.33,0,0,0,36.19,59.3L5.62,90.05a6.73,6.73,0,0,0-1.36,7.47l11.47,25.56L0,165.92,56.47,380.64a89.7,89.7,0,0,0,34.7,50.23l111.68,75.69a24.73,24.73,0,0,0,30.89,0l111.62-75.8A88.86,88.86,0,0,0,380,380.53l46.07-176.14Z"/>
+                            <path class="cls-2-gaming" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1,14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Brave</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(34 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">34</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://images.icon-icons.com/2699/PNG/512/opera_logo_icon_168920.png" alt="Opera Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Opera</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(32 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">32</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" alt="Firefox Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Firefox</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(26 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">26</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/1200px-Safari_browser_logo.svg.png" alt="Safari Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Safari</h2>
+                    <p class="text-lg font-normal mt-1 text-white">Netestováno</p>
+                </div>
+            </div>
+
+            <div id="workstation-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
+                            <defs>
+                                <radialGradient id="b-workstation" cx="161.83" cy="68.91" r="95.38" gradientTransform="matrix(1 0 0 -.95 0 248.84)" gradientUnits="userSpaceOnUse"><stop offset=".72" stop-opacity="0"/><stop offset=".95" stop-opacity=".53"/><stop offset="1"/></radialGradient>
+                                <radialGradient id="d-workstation" cx="-340.29" cy="62.99" r="143.24" gradientTransform="matrix(.15 -.99 -.8 -.12 176.64 -125.4)" gradientUnits="userSpaceOnUse"><stop offset=".76" stop-opacity="0"/><stop offset=".95" stop-opacity=".5"/><stop offset="1"/></radialGradient>
+                                <radialGradient id="e-workstation" cx="113.37" cy="570.21" r="202.43" gradientTransform="matrix(-.04 1 2.13 .08 -1179.54 -106.69)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#35c1f1"/><stop offset=".11" stop-color="#34c1ed"/><stop offset=".23" stop-color="#2fc2df"/><stop offset=".31" stop-color="#2bc3d2"/><stop offset=".67" stop-color="#36c752"/></radialGradient>
+                                <radialGradient id="f-workstation" cx="376.52" cy="567.97" r="97.34" gradientTransform="matrix(.28 .96 .78 -.23 -303.76 -148.5)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#66eb6e"/><stop offset="1" stop-color="#66eb6e" stop-opacity="0"/></radialGradient>
+                                <linearGradient id="a-workstation" x1="63.33" y1="84.03" x2="241.67" y2="84.03" gradientTransform="matrix(1 0 0 -1 0 266)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0c59a4"/><stop offset="1" stop-color="#114a8b"/></linearGradient>
+                                <linearGradient id="c-workstation" x1="157.35" y1="161.39" x2="45.96" y2="40.06" gradientTransform="matrix(1 0 0 -1 0 266)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1b9de2"/><stop offset=".16" stop-color="#1595df"/><stop offset=".67" stop-color="#0680d7"/><stop offset="1" stop-color="#0078d4"/></linearGradient>
+                            </defs>
+                            <path d="M235.68 195.46a93.73 93.73 0 01-10.54 4.71 101.87 101.87 0 01-35.9 6.46c-47.32 0-88.54-32.55-88.54-74.32A31.48 31.48 0 01117.13 105c-42.8 1.8-53.8 46.4-53.8 72.53 0 73.88 68.09 81.37 82.76 81.37 7.91 0 19.84-2.3 27-4.56l1.31-.44a128.34 128.34 0 0066.6-52.8 4 4 0 00-5.32-5.64z" transform="translate(-4.63 -4.92)" fill="url(#a-workstation)"/><path d="M235.68 195.46a93.73 93.73 0 01-10.54 4.71 101.87 101.87 0 01-35.9 6.46c-47.32 0-88.54-32.55-88.54-74.32A31.48 31.48 0 01117.13 105c-42.8 1.8-53.8 46.4-53.8 72.53 0 73.88 68.09 81.37 82.76 81.37 7.91 0 19.84-2.3 27-4.56l1.31-.44a128.34 128.34 0 0066.6-52.8 4 4 0 00-5.32-5.64z" transform="translate(-4.63 -4.92)" style="isolation:isolate" opacity=".35" fill="url(#b-workstation)"/><path d="M110.34 246.34A79.2 79.2 0 0187.6 225a80.72 80.72 0 0129.53-120c3.12-1.47 8.45-4.13 15.54-4a32.35 32.35 0 0125.69 13 31.88 31.88 0 016.36 18.66c0-.21 24.46-79.6-80-79.6-43.9 0-80 41.66-80 78.21a130.15 130.15 0 0012.11 56 128 128 0 00156.38 67.11 75.55 75.55 0 01-62.78-8z" transform="translate(-4.63 -4.92)" fill="url(#c-workstation)"/><path d="M110.34 246.34A79.2 79.2 0 0187.6 225a80.72 80.72 0 0129.53-120c3.12-1.47 8.45-4.13 15.54-4a32.35 32.35 0 0125.69 13 31.88 31.88 0 016.36 18.66c0-.21 24.46-79.6-80-79.6-43.9 0-80 41.66-80 78.21a130.15 130.15 0 0012.11 56 128 128 0 00156.38 67.11 75.55 75.55 0 01-62.78-8z" transform="translate(-4.63 -4.92)" style="isolation:isolate" opacity=".41" fill="url(#d-workstation)"/><path d="M156.94 153.78c-.81 1.05-3.3 2.5-3.3 5.66 0 2.61 1.7 5.12 4.72 7.23 14.38 10 41.49 8.68 41.56 8.68a59.56 59.56 0 0030.27-8.35 61.38 61.38 0 0030.43-52.88c.26-22.41-8-37.31-11.34-43.91-21.19-41.45-66.93-65.29-116.67-65.29a128 128 0 00-128 126.2c.48-36.54 36.8-66.05 80-66.05 3.5 0 23.46.34 42 10.07 16.34 8.58 24.9 18.94 30.85 29.21 6.18 10.67 7.28 24.15 7.28 29.52s-2.74 13.33-7.8 19.91z" transform="translate(-4.63 -4.92)" fill="url(#e-workstation)"/><path d="M156.94 153.78c-.81 1.05-3.3 2.5-3.3 5.66 0 2.61 1.7 5.12 4.72 7.23 14.38 10 41.49 8.68 41.56 8.68a59.56 59.56 0 0030.27-8.35 61.38 61.38 0 0030.43-52.88c.26-22.41-8-37.31-11.34-43.91-21.19-41.45-66.93-65.29-116.67-65.29a128 128 0 00-128 126.2c.48-36.54 36.8-66.05 80-66.05 3.5 0 23.46.34 42 10.07 16.34 8.58 24.9 18.94 30.85 29.21 6.18 10.67 7.28 24.15 7.28 29.52s-2.74 13.33-7.8 19.91z" transform="translate(-4.63 -4.92)" fill="url(#f-workstation)"/></svg>
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Edge</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(34 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">34</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://www.google.com/chrome/static/images/chrome-logo.svg" alt="Chrome Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Chrome</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(33 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">33</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <svg id="Layer_1-workstation" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 436.49 511.97" class="w-16 h-16 object-contain">
+                            <defs>
+                                <style>.cls-1-workstation{fill:url(#linear-gradient-workstation);}.cls-2-workstation{fill:#fff;}</style>
+                                <linearGradient id="linear-gradient-workstation" x1="-18.79" y1="359.73" x2="194.32" y2="359.73" gradientTransform="matrix(2.05, 0, 0, -2.05, 38.49, 992.77)" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-color="#f1562b"/>
+                                    <stop offset="0.3" stop-color="#f1542b"/>
+                                    <stop offset="0.41" stop-color="#f04d2a"/>
+                                    <stop offset="0.49" stop-color="#ef4229"/>
+                                    <stop offset="0.5" stop-color="#ef4029"/>
+                                    <stop offset="0.56" stop-color="#e83e28"/>
+                                    <stop offset="0.67" stop-color="#e13c26"/>
+                                    <stop offset="1" stop-color="#df3c26"/>
+                                </linearGradient>
+                            </defs>
+                            <title>brave-browser</title>
+                            <path class="cls-1-workstation" d="M436.49,165.63,420.7,122.75l11-24.6A8.47,8.47,0,0,0,430,88.78L400.11,58.6a48.16,48.16,0,0,0-50.23-11.66l-8.19,2.89L296.09.43,218.25,0,140.4.61,94.85,50.41l-8.11-2.87A48.33,48.33,0,0,0,36.19,59.3L5.62,90.05a6.73,6.73,0,0,0-1.36,7.47l11.47,25.56L0,165.92,56.47,380.64a89.7,89.7,0,0,0,34.7,50.23l111.68,75.69a24.73,24.73,0,0,0,30.89,0l111.62-75.8A88.86,88.86,0,0,0,380,380.53l46.07-176.14Z"/>
+                            <path class="cls-2-workstation" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1,14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Brave</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(32 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">32</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://images.icon-icons.com/2699/PNG/512/opera_logo_icon_168920.png" alt="Opera Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Opera</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(30 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">30</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" alt="Firefox Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Firefox</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(24 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">24</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/1200px-Safari_browser_logo.svg.png" alt="Safari Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Safari</h2>
+                    <p class="text-lg font-normal mt-1 text-white">Netestováno</p>
+                </div>
+            </div>
+
+            <div id="multimedia-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
+                            <defs>
+                                <radialGradient id="b-multimedia" cx="161.83" cy="68.91" r="95.38" gradientTransform="matrix(1 0 0 -.95 0 248.84)" gradientUnits="userSpaceOnUse"><stop offset=".72" stop-opacity="0"/><stop offset=".95" stop-opacity=".53"/><stop offset="1"/></radialGradient>
+                                <radialGradient id="d-multimedia" cx="-340.29" cy="62.99" r="143.24" gradientTransform="matrix(.15 -.99 -.8 -.12 176.64 -125.4)" gradientUnits="userSpaceOnUse"><stop offset=".76" stop-opacity="0"/><stop offset=".95" stop-opacity=".5"/><stop offset="1"/></radialGradient>
+                                <radialGradient id="e-multimedia" cx="113.37" cy="570.21" r="202.43" gradientTransform="matrix(-.04 1 2.13 .08 -1179.54 -106.69)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#35c1f1"/><stop offset=".11" stop-color="#34c1ed"/><stop offset=".23" stop-color="#2fc2df"/><stop offset=".31" stop-color="#2bc3d2"/><stop offset=".67" stop-color="#36c752"/></radialGradient>
+                                <radialGradient id="f-multimedia" cx="376.52" cy="567.97" r="97.34" gradientTransform="matrix(.28 .96 .78 -.23 -303.76 -148.5)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#66eb6e"/><stop offset="1" stop-color="#66eb6e" stop-opacity="0"/></radialGradient>
+                                <linearGradient id="a-multimedia" x1="63.33" y1="84.03" x2="241.67" y2="84.03" gradientTransform="matrix(1 0 0 -1 0 266)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0c59a4"/><stop offset="1" stop-color="#114a8b"/></linearGradient>
+                                <linearGradient id="c-multimedia" x1="157.35" y1="161.39" x2="45.96" y2="40.06" gradientTransform="matrix(1 0 0 -1 0 266)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1b9de2"/><stop offset=".16" stop-color="#1595df"/><stop offset=".67" stop-color="#0680d7"/><stop offset="1" stop-color="#0078d4"/></linearGradient>
+                            </defs>
+                            <path d="M235.68 195.46a93.73 93.73 0 01-10.54 4.71 101.87 101.87 0 01-35.9 6.46c-47.32 0-88.54-32.55-88.54-74.32A31.48 31.48 0 01117.13 105c-42.8 1.8-53.8 46.4-53.8 72.53 0 73.88 68.09 81.37 82.76 81.37 7.91 0 19.84-2.3 27-4.56l1.31-.44a128.34 128.34 0 0066.6-52.8 4 4 0 00-5.32-5.64z" transform="translate(-4.63 -4.92)" fill="url(#a-multimedia)"/><path d="M235.68 195.46a93.73 93.73 0 01-10.54 4.71 101.87 101.87 0 01-35.9 6.46c-47.32 0-88.54-32.55-88.54-74.32A31.48 31.48 0 01117.13 105c-42.8 1.8-53.8 46.4-53.8 72.53 0 73.88 68.09 81.37 82.76 81.37 7.91 0 19.84-2.3 27-4.56l1.31-.44a128.34 128.34 0 0066.6-52.8 4 4 0 00-5.32-5.64z" transform="translate(-4.63 -4.92)" style="isolation:isolate" opacity=".35" fill="url(#b-multimedia)"/><path d="M110.34 246.34A79.2 79.2 0 0187.6 225a80.72 80.72 0 0129.53-120c3.12-1.47 8.45-4.13 15.54-4a32.35 32.35 0 0125.69 13 31.88 31.88 0 016.36 18.66c0-.21 24.46-79.6-80-79.6-43.9 0-80 41.66-80 78.21a130.15 130.15 0 0012.11 56 128 128 0 00156.38 67.11 75.55 75.55 0 01-62.78-8z" transform="translate(-4.63 -4.92)" fill="url(#c-multimedia)"/><path d="M110.34 246.34A79.2 79.2 0 0187.6 225a80.72 80.72 0 0129.53-120c3.12-1.47 8.45-4.13 15.54-4a32.35 32.35 0 0125.69 13 31.88 31.88 0 016.36 18.66c0-.21 24.46-79.6-80-79.6-43.9 0-80 41.66-80 78.21a130.15 130.15 0 0012.11 56 128 128 0 00156.38 67.11 75.55 75.55 0 01-62.78-8z" transform="translate(-4.63 -4.92)" style="isolation:isolate" opacity=".41" fill="url(#d-multimedia)"/><path d="M156.94 153.78c-.81 1.05-3.3 2.5-3.3 5.66 0 2.61 1.7 5.12 4.72 7.23 14.38 10 41.49 8.68 41.56 8.68a59.56 59.56 0 0030.27-8.35 61.38 61.38 0 0030.43-52.88c.26-22.41-8-37.31-11.34-43.91-21.19-41.45-66.93-65.29-116.67-65.29a128 128 0 00-128 126.2c.48-36.54 36.8-66.05 80-66.05 3.5 0 23.46.34 42 10.07 16.34 8.58 24.9 18.94 30.85 29.21 6.18 10.67 7.28 24.15 7.28 29.52s-2.74 13.33-7.8 19.91z" transform="translate(-4.63 -4.92)" fill="url(#e-multimedia)"/><path d="M156.94 153.78c-.81 1.05-3.3 2.5-3.3 5.66 0 2.61 1.7 5.12 4.72 7.23 14.38 10 41.49 8.68 41.56 8.68a59.56 59.56 0 0030.27-8.35 61.38 61.38 0 0030.43-52.88c.26-22.41-8-37.31-11.34-43.91-21.19-41.45-66.93-65.29-116.67-65.29a128 128 0 00-128 126.2c.48-36.54 36.8-66.05 80-66.05 3.5 0 23.46.34 42 10.07 16.34 8.58 24.9 18.94 30.85 29.21 6.18 10.67 7.28 24.15 7.28 29.52s-2.74 13.33-7.8 19.91z" transform="translate(-4.63 -4.92)" fill="url(#f-multimedia)"/></svg>
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Edge</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(19 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">19</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://www.google.com/chrome/static/images/chrome-logo.svg" alt="Chrome Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Chrome</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(18 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">18</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <svg id="Layer_1-multimedia" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 436.49 511.97" class="w-16 h-16 object-contain">
+                            <defs>
+                                <style>.cls-1-multimedia{fill:url(#linear-gradient-multimedia);}.cls-2-multimedia{fill:#fff;}</style>
+                                <linearGradient id="linear-gradient-multimedia" x1="-18.79" y1="359.73" x2="194.32" y2="359.73" gradientTransform="matrix(2.05, 0, 0, -2.05, 38.49, 992.77)" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-color="#f1562b"/>
+                                    <stop offset="0.3" stop-color="#f1542b"/>
+                                    <stop offset="0.41" stop-color="#f04d2a"/>
+                                    <stop offset="0.49" stop-color="#ef4229"/>
+                                    <stop offset="0.5" stop-color="#ef4029"/>
+                                    <stop offset="0.56" stop-color="#e83e28"/>
+                                    <stop offset="0.67" stop-color="#e13c26"/>
+                                    <stop offset="1" stop-color="#df3c26"/>
+                                </linearGradient>
+                            </defs>
+                            <title>brave-browser</title>
+                            <path class="cls-1-multimedia" d="M436.49,165.63,420.7,122.75l11-24.6A8.47,8.47,0,0,0,430,88.78L400.11,58.6a48.16,48.16,0,0,0-50.23-11.66l-8.19,2.89L296.09.43,218.25,0,140.4.61,94.85,50.41l-8.11-2.87A48.33,48.33,0,0,0,36.19,59.3L5.62,90.05a6.73,6.73,0,0,0-1.36,7.47l11.47,25.56L0,165.92,56.47,380.64a89.7,89.7,0,0,0,34.7,50.23l111.68,75.69a24.73,24.73,0,0,0,30.89,0l111.62-75.8A88.86,88.86,0,0,0,380,380.53l46.07-176.14Z"/>
+                            <path class="cls-2-multimedia" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1,14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Brave</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(19 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">19</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://images.icon-icons.com/2699/PNG/512/opera_logo_icon_168920.png" alt="Opera Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Opera</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(17 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">17</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" alt="Firefox Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Firefox</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(11 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">11</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/1200px-Safari_browser_logo.svg.png" alt="Safari Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Safari</h2>
+                    <p class="text-lg font-normal mt-1 text-white">Netestováno</p>
+                </div>
+            </div>
+
+            <div id="office-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
+                            <defs>
+                                <radialGradient id="b-office" cx="161.83" cy="68.91" r="95.38" gradientTransform="matrix(1 0 0 -.95 0 248.84)" gradientUnits="userSpaceOnUse"><stop offset=".72" stop-opacity="0"/><stop offset=".95" stop-opacity=".53"/><stop offset="1"/></radialGradient>
+                                <radialGradient id="d-office" cx="-340.29" cy="62.99" r="143.24" gradientTransform="matrix(.15 -.99 -.8 -.12 176.64 -125.4)" gradientUnits="userSpaceOnUse"><stop offset=".76" stop-opacity="0"/><stop offset=".95" stop-opacity=".5"/><stop offset="1"/></radialGradient>
+                                <radialGradient id="e-office" cx="113.37" cy="570.21" r="202.43" gradientTransform="matrix(-.04 1 2.13 .08 -1179.54 -106.69)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#35c1f1"/><stop offset=".11" stop-color="#34c1ed"/><stop offset=".23" stop-color="#2fc2df"/><stop offset=".31" stop-color="#2bc3d2"/><stop offset=".67" stop-color="#36c752"/></radialGradient>
+                                <radialGradient id="f-office" cx="376.52" cy="567.97" r="97.34" gradientTransform="matrix(.28 .96 .78 -.23 -303.76 -148.5)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#66eb6e"/><stop offset="1" stop-color="#66eb6e" stop-opacity="0"/></radialGradient>
+                                <linearGradient id="a-office" x1="63.33" y1="84.03" x2="241.67" y2="84.03" gradientTransform="matrix(1 0 0 -1 0 266)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0c59a4"/><stop offset="1" stop-color="#114a8b"/></linearGradient>
+                                <linearGradient id="c-office" x1="157.35" y1="161.39" x2="45.96" y2="40.06" gradientTransform="matrix(1 0 0 -1 0 266)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1b9de2"/><stop offset=".16" stop-color="#1595df"/><stop offset=".67" stop-color="#0680d7"/><stop offset="1" stop-color="#0078d4"/></linearGradient>
+                            </defs>
+                            <path d="M235.68 195.46a93.73 93.73 0 01-10.54 4.71 101.87 101.87 0 01-35.9 6.46c-47.32 0-88.54-32.55-88.54-74.32A31.48 31.48 0 01117.13 105c-42.8 1.8-53.8 46.4-53.8 72.53 0 73.88 68.09 81.37 82.76 81.37 7.91 0 19.84-2.3 27-4.56l1.31-.44a128.34 128.34 0 0066.6-52.8 4 4 0 00-5.32-5.64z" transform="translate(-4.63 -4.92)" fill="url(#a-office)"/><path d="M235.68 195.46a93.73 93.73 0 01-10.54 4.71 101.87 101.87 0 01-35.9 6.46c-47.32 0-88.54-32.55-88.54-74.32A31.48 31.48 0 01117.13 105c-42.8 1.8-53.8 46.4-53.8 72.53 0 73.88 68.09 81.37 82.76 81.37 7.91 0 19.84-2.3 27-4.56l1.31-.44a128.34 128.34 0 0066.6-52.8 4 4 0 00-5.32-5.64z" transform="translate(-4.63 -4.92)" style="isolation:isolate" opacity=".35" fill="url(#b-office)"/><path d="M110.34 246.34A79.2 79.2 0 0187.6 225a80.72 80.72 0 0129.53-120c3.12-1.47 8.45-4.13 15.54-4a32.35 32.35 0 0125.69 13 31.88 31.88 0 016.36 18.66c0-.21 24.46-79.6-80-79.6-43.9 0-80 41.66-80 78.21a130.15 130.15 0 0012.11 56 128 128 0 00156.38 67.11 75.55 75.55 0 01-62.78-8z" transform="translate(-4.63 -4.92)" fill="url(#c-office)"/><path d="M110.34 246.34A79.2 79.2 0 0187.6 225a80.72 80.72 0 0129.53-120c3.12-1.47 8.45-4.13 15.54-4a32.35 32.35 0 0125.69 13 31.88 31.88 0 016.36 18.66c0-.21 24.46-79.6-80-79.6-43.9 0-80 41.66-80 78.21a130.15 130.15 0 0012.11 56 128 128 0 00156.38 67.11 75.55 75.55 0 01-62.78-8z" transform="translate(-4.63 -4.92)" style="isolation:isolate" opacity=".41" fill="url(#d-office)"/><path d="M156.94 153.78c-.81 1.05-3.3 2.5-3.3 5.66 0 2.61 1.7 5.12 4.72 7.23 14.38 10 41.49 8.68 41.56 8.68a59.56 59.56 0 0030.27-8.35 61.38 61.38 0 0030.43-52.88c.26-22.41-8-37.31-11.34-43.91-21.19-41.45-66.93-65.29-116.67-65.29a128 128 0 00-128 126.2c.48-36.54 36.8-66.05 80-66.05 3.5 0 23.46.34 42 10.07 16.34 8.58 24.9 18.94 30.85 29.21 6.18 10.67 7.28 24.15 7.28 29.52s-2.74 13.33-7.8 19.91z" transform="translate(-4.63 -4.92)" fill="url(#e-office)"/><path d="M156.94 153.78c-.81 1.05-3.3 2.5-3.3 5.66 0 2.61 1.7 5.12 4.72 7.23 14.38 10 41.49 8.68 41.56 8.68a59.56 59.56 0 0030.27-8.35 61.38 61.38 0 0030.43-52.88c.26-22.41-8-37.31-11.34-43.91-21.19-41.45-66.93-65.29-116.67-65.29a128 128 0 00-128 126.2c.48-36.54 36.8-66.05 80-66.05 3.5 0 23.46.34 42 10.07 16.34 8.58 24.9 18.94 30.85 29.21 6.18 10.67 7.28 24.15 7.28 29.52s-2.74 13.33-7.8 19.91z" transform="translate(-4.63 -4.92)" fill="url(#f-office)"/></svg>
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Edge</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(23 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">23</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://www.google.com/chrome/static/images/chrome-logo.svg" alt="Chrome Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Chrome</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(22 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">22</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <svg id="Layer_1-office" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 436.49 511.97" class="w-16 h-16 object-contain">
+                            <defs>
+                                <style>.cls-1-office{fill:url(#linear-gradient-office);}.cls-2-office{fill:#fff;}</style>
+                                <linearGradient id="linear-gradient-office" x1="-18.79" y1="359.73" x2="194.32" y2="359.73" gradientTransform="matrix(2.05, 0, 0, -2.05, 38.49, 992.77)" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-color="#f1562b"/>
+                                    <stop offset="0.3" stop-color="#f1542b"/>
+                                    <stop offset="0.41" stop-color="#f04d2a"/>
+                                    <stop offset="0.49" stop-color="#ef4229"/>
+                                    <stop offset="0.5" stop-color="#ef4029"/>
+                                    <stop offset="0.56" stop-color="#e83e28"/>
+                                    <stop offset="0.67" stop-color="#e13c26"/>
+                                    <stop offset="1" stop-color="#df3c26"/>
+                                </linearGradient>
+                            </defs>
+                            <title>brave-browser</title>
+                            <path class="cls-1-office" d="M436.49,165.63,420.7,122.75l11-24.6A8.47,8.47,0,0,0,430,88.78L400.11,58.6a48.16,48.16,0,0,0-50.23-11.66l-8.19,2.89L296.09.43,218.25,0,140.4.61,94.85,50.41l-8.11-2.87A48.33,48.33,0,0,0,36.19,59.3L5.62,90.05a6.73,6.73,0,0,0-1.36,7.47l11.47,25.56L0,165.92,56.47,380.64a89.7,89.7,0,0,0,34.7,50.23l111.68,75.69a24.73,24.73,0,0,0,30.89,0l111.62-75.8A88.86,88.86,0,0,0,380,380.53l46.07-176.14Z"/>
+                            <path class="cls-2-office" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1,14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Brave</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(21 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">21</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://images.icon-icons.com/2699/PNG/512/opera_logo_icon_168920.png" alt="Opera Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Opera</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(19 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">19</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png" alt="Firefox Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Firefox</h2>
+                    <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
+                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(11 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">11</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
+                    <div class="bg-white rounded-full p-2 mb-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/1200px-Safari_browser_logo.svg.png" alt="Safari Logo" class="w-16 h-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" />
+                    </div>
+                    <h2 class="text-xl font-semibold mb-2">Safari</h2>
+                    <p class="text-lg font-normal mt-1 text-white">Netestováno</p>
+                </div>
+            </div>
+
+            <p class="mt-8 text-sm text-center text-white">
+                Testováno 28. května 2025, verze prohlížečů jsou aktuální k datu testování.
+            </p>
+        </div>
+    </header>
+
+    <section class="bg-white py-12 px-8">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Dodatečné informace o prohlížečích</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="info-card p-6">
+                    <h3 class="text-xl font-semibold mb-2">Bezpečnost a soukromí</h3>
+                    <p class="text-sm text-gray-700">Moderní webové prohlížeče neustále inovují v oblasti bezpečnosti a soukromí. Nabízejí funkce jako ochrana proti sledování, blokování nebezpečných stránek a integrované VPN služby. Je důležité si vybrat prohlížeč, který nejlépe odpovídá vašim požadavkům na ochranu dat.</p>
+                </div>
+                <div class="info-card p-6">
+                    <h3 class="text-xl font-semibold mb-2">Rozšíření a přizpůsobení</h3>
+                    <p class="text-sm text-gray-700">Většina prohlížečů podporuje širokou škálu rozšíření a doplňků, které mohou výrazně zlepšit vaši produktivitu a uživatelský zážitek. Od nástrojů pro správu hesel po blokátory reklam, možnosti přizpůsobení jsou téměř neomezené. Před instalací rozšíření vždy zkontrolujte jejich důvěryhodnost.</p>
+                </div>
+                <div class="info-card p-6">
+                    <h3 class="text-xl font-semibold mb-2">Spotřeba zdrojů</h3>
+                    <p class="text-sm text-gray-700">Výkon prohlížeče není jen o rychlosti JavaScriptu, ale také o spotřebě paměti a procesoru. Pro uživatele s méně výkonnými počítači může být klíčové zvolit prohlížeč, který je optimalizován pro nižší spotřebu zdrojů, aby nedocházelo ke zpomalení systému.</p>
+                </div>
+                <div class="info-card p-6">
+                    <h3 class="text-xl font-semibold mb-2">Synchronizace napříč zařízeními</h3>
+                    <p class="text-sm text-gray-700">Mnoho prohlížečů nabízí synchronizaci dat (záložky, historie, hesla) napříč všemi vašimi zařízeními. To zajišťuje plynulý přechod mezi počítačem, tabletem a telefonem a udržuje vaše data aktuální a dostupná, ať jste kdekoli.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white py-12 px-8">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Náš Blog</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="blog-card">
+                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+1" alt="Blog Image 1">
+                    <div class="blog-card-content">
+                        <h3>Jak optimalizovat svůj prohlížeč pro maximální rychlost</h3>
+                        <p class="text-sm">Zjistěte, jaké jednoduché kroky můžete podniknout k výraznému zrychlení vašeho webového prohlížeče a zlepšení celkového výkonu. Odstranění zbytečných rozšíření, správa mezipaměti a další tipy.</p>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+2" alt="Blog Image 2">
+                    <div class="blog-card-content">
+                        <h3>Budoucnost webových prohlížečů: Co nás čeká?</h3>
+                        <p class="text-sm">Podívejte se s námi na nejnovější trendy a inovace ve vývoji webových prohlížečů. Od umělé inteligence po vylepšené zabezpečení, budoucnost je plná překvapení.</p>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+3" alt="Blog Image 3">
+                    <div class="blog-card-content">
+                        <h3>Proč je Speedometer 3.1 klíčový pro benchmarky prohlížečů</h3>
+                        <p class="text-sm">Ponořte se do detailů testu Speedometer 3.1 a zjistěte, proč je tak důležitý pro objektivní hodnocení výkonu webových prohlížečů. Pochopte, co přesně měří.</p>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+4" alt="Blog Image 4">
+                    <div class="blog-card-content">
+                        <h3>Tipy a triky pro bezpečné prohlížení webu</h3>
+                        <p class="text-sm">Zvyšte svou online bezpečnost s našimi praktickými tipy. Jak se vyhnout phishingovým útokům, chránit svá data a bezpečně procházet internet.</p>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+5" alt="Blog Image 5">
+                    <div class="blog-card-content">
+                        <h3>Historie webových prohlížečů: Od počátků po současnost</h3>
+                        <p class="text-sm">Projděte si fascinující historii webových prohlížečů, od prvních textových rozhraní až po dnešní moderní a komplexní aplikace.</p>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <img src="https://placehold.co/600x400/4338CA/FFFFFF?text=Blog+Image+6" alt="Blog Image 6">
+                    <div class="blog-card-content">
+                        <h3>Jak vybrat ten správný prohlížeč pro vaše potřeby</h3>
+                        <p class="text-sm">Průvodce výběrem webového prohlížeče, který nejlépe vyhovuje vašemu pracovnímu stylu, preferencím soukromí a hardwarovým specifikacím.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mt-10 text-center text-gray-500 text-sm pb-4">
+        &copy; 2025 Srovnání prohlížečů a PC sestav. Všechna práva vyhrazena.
+    </footer>
+
+    <script>
+        // Function to show the selected category and hide others
+        function showCategory(categoryId) {
+            // Get all content sections
+            const sections = document.querySelectorAll('.content-section');
+            // Hide all sections
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Get all buttons
+            const buttons = document.querySelectorAll('.grid button');
+            // Remove active-button class from all buttons
+            buttons.forEach(button => {
+                button.classList.remove('active-button');
+            });
+
+            // Show the selected section
+            const selectedSection = document.getElementById(categoryId);
+            if (selectedSection) {
+                selectedSection.style.display = 'grid'; // Use grid to maintain layout
+            }
+
+            // Add active-button class to the clicked button
+            const clickedButton = document.getElementById(categoryId + '-btn');
+            if (clickedButton) {
+                clickedButton.classList.add('active-button');
+            }
+        }
+
+        // Show the default category on page load
+        window.onload = function() {
+            showCategory('gaming-pc');
+        };
+    </script>
+
+</body>
+</html>
