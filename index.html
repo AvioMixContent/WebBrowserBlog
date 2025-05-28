@@ -31,6 +31,7 @@
             backdrop-filter: blur(5px); /* Jemné rozostření pro efekt matného skla */
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
             font-size: 0.65rem; /* Vlastní menší velikost písma pro tlačítka */
+            width: 12rem; /* Pevná šířka pro tlačítka (w-48) */
         }
         .header-button.active-button {
             background-color: rgba(255, 255, 255, 0.2); /* Lehce neprůhledná bílá */
@@ -95,18 +96,23 @@
                 <div class="flex items-center space-x-2">
                     <svg width="180" height="80" viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <linearGradient id="line-glossy-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#E0F2F7" /> <stop offset="100%" stop-color="#87CEEB" /> </linearGradient>
+                            <linearGradient id="speedo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ADD8E6" /> <stop offset="100%" stop-color="#87CEEB" /> </linearGradient>
                         </defs>
-                        <path d="M15 45 A 25 25 0 1 1 55 45" stroke="url(#line-glossy-gradient)" stroke-width="3" fill="none" stroke-linecap="round"/>
-                        <line x1="20" y1="40" x2="20" y2="45" stroke="#ADD8E6" stroke-width="1"/>
-                        <line x1="25" y1="30" x2="27" y2="35" stroke="#ADD8E6" stroke-width="1" transform="rotate(-15 25 30)"/>
-                        <line x1="35" y1="25" x2="35" y2="28" stroke="#ADD8E6" stroke-width="1"/>
-                        <line x1="45" y1="30" x2="43" y2="35" stroke="#ADD8E6" stroke-width="1" transform="rotate(15 45 30)"/>
-                        <line x1="50" y1="40" x2="50" y2="45" stroke="#ADD8E6" stroke-width="1"/>
 
-                        <line x1="35" y1="45" x2="45" y2="35" stroke="white" stroke-width="2" stroke-linecap="round" transform="rotate(-45 35 45)"/>
-                        <circle cx="35" cy="45" r="2" fill="white"/>
+                        <path d="M15 45 A 25 25 0 1 1 55 45" stroke="url(#speedo-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+                        <path d="M17 45 A 23 23 0 1 1 53 45" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none" stroke-linecap="round"/>
+
+                        <line x1="15" y1="45" x2="20" y2="45" stroke="#ADD8E6" stroke-width="1" stroke-linecap="round"/>
+                        <line x1="25" y1="28" x2="28" y2="33" stroke="#ADD8E6" stroke-width="1" stroke-linecap="round" transform="rotate(-15 25 28)"/>
+                        <line x1="35" y1="20" x2="35" y2="25" stroke="#ADD8E6" stroke-width="1" stroke-linecap="round"/>
+                        <line x1="45" y1="28" x2="42" y2="33" stroke="#ADD8E6" stroke-width="1" stroke-linecap="round" transform="rotate(15 45 28)"/>
+                        <line x1="55" y1="45" x2="50" y2="45" stroke="#ADD8E6" stroke-width="1" stroke-linecap="round"/>
+
+                        <line x1="35" y1="45" x2="45" y2="30" stroke="white" stroke-width="2" stroke-linecap="round"/>
+
+                        <circle cx="35" cy="45" r="3" fill="white"/>
 
                         <text x="65" y="25" dominant-baseline="middle" text-anchor="start" font-family="'Orbitron', sans-serif" font-size="28" font-weight="bold" fill="white">W</text>
                         <text x="65" y="45" dominant-baseline="middle" text-anchor="start" font-family="'Orbitron', sans-serif" font-size="18" fill="white">&lt; Br &gt;</text>
@@ -114,16 +120,16 @@
                     </svg>
                 </div>
                 <div class="flex flex-wrap justify-end gap-3">
-                    <button id="gaming-pc-btn" onclick="showCategory('gaming-pc')" class="header-button w-36 font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300 active-button">
+                    <button id="gaming-pc-btn" onclick="showCategory('gaming-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300 active-button">
                         i7 13980HX<br>RTX 4090 laptop<br>32 GB DDR5 4800
                     </button>
-                    <button id="workstation-pc-btn" onclick="showCategory('workstation-pc')" class="header-button w-36 font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
+                    <button id="workstation-pc-btn" onclick="showCategory('workstation-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
                         7800X3D<br>RTX 4080 Super<br>32 GB RAM DDR5 6000
                     </button>
-                    <button id="multimedia-pc-btn" onclick="showCategory('multimedia-pc')" class="header-button w-36 font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
+                    <button id="multimedia-pc-btn" onclick="showCategory('multimedia-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
                         i5 10400<br>Integrated<br>16 GB DDR4 2666
                     </button>
-                    <button id="office-pc-btn" onclick="showCategory('office-pc')" class="header-button w-36 font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
+                    <button id="office-pc-btn" onclick="showCategory('office-pc')" class="header-button font-semibold py-2 px-2 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-gray-300">
                         i7 10750H<br>RTX 2070 Super laptop<br>16 GB DDR4 2666
                     </button>
                 </div>
@@ -530,7 +536,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="info-card p-6">
                     <h3>Realistické scénáře</h3>
-                    <p class="mt-2">Speedometer 3.1 simuluje reálné uživatelské interakce, jako je přidávání položek do seznamů úkolů, úpravy textu a manipulace s daty. To poskytuje přesnější obraz o tom,jak se prohlížeč chová při každodenním používání.</p>
+                    <p class="mt-2">Speedometer 3.1 simuluje reálné uživatelské interakce, jako je přidávání položek do seznamů úkolů, úpravy textu a manipulace s daty. To poskytuje přesnější obraz o tom, jak se prohlížeč chová při každodenním používání.</p>
                 </div>
                 <div class="info-card p-6">
                     <h3>Vývojářské nástroje</h3>
