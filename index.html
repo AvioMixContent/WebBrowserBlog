@@ -17,14 +17,21 @@
             display: flex;
             flex-direction: column;
         }
-        /* Skrytí obsahových sekcí ve výchozím nastavení */
-        .content-section {
-            display: none;
+        /* Skrytí sekcí s PC kategoriemi ve výchozím nastavení */
+        .pc-category-section {
+            display: none; /* Skryje sekce PC kategorií */
             border-radius: 0.75rem; /* Zaoblené rohy pro obsahové sekce */
             margin-top: 2rem; /* Přidání horního okraje pro oddělení od textu záhlaví */
             width: 100%; /* Zajištění, že zabírá celou šířku v rámci svého kontejneru */
         }
-        /* Nové styly pro tlačítka v záhlaví */
+        /* Sekce blogu a informací jsou vždy viditelné */
+        .blog-info-section {
+            display: grid; /* Zajištění, že se zobrazí jako grid */
+            border-radius: 0.75rem;
+            margin-top: 2rem;
+            width: 100%;
+        }
+        /* Styly pro tlačítka v záhlaví */
         .header-button {
             background-color: transparent; /* Průhledné pozadí pro splynutí */
             color: #ffffff; /* Bílý text pro tlačítka záhlaví */
@@ -40,7 +47,7 @@
         }
         /* Styly pro průhledné obsahové karty s efektem matného skla */
         .content-card {
-            background-color: #312E81; /* Změněno na plnou indigo-800 */
+            background-color: transparent; /* Změněno na transparentní */
             backdrop-filter: blur(5px); /* Použití rozostření na pozadí */
             color: #ffffff; /* Bílý text pro lepší kontrast na rozostřeném pozadí */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Jemnější, rozptýlenější stín */
@@ -96,7 +103,7 @@
                 <div class="flex items-center space-x-2">
                     <svg width="180" height="80" viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <linearGradient id="speedo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <linearGradient id="speedo-gradient" x1="0%" y1="0%" y2="100%">
                                 <stop offset="0%" stop-color="#ADD8E6" /> <stop offset="100%" stop-color="#87CEEB" /> </linearGradient>
                         </defs>
 
@@ -144,7 +151,7 @@
                 </p>
             </div>
 
-            <div id="gaming-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="gaming-pc" class="pc-category-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
                     <div class="bg-white rounded-full p-2 mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
@@ -196,7 +203,7 @@
                             </defs>
                             <title>brave-browser</title>
                             <path class="cls-1-gaming" d="M436.49,165.63,420.7,122.75l11-24.6A8.47,8.47,0,0,0,430,88.78L400.11,58.6a48.16,48.16,0,0,0-50.23-11.66l-8.19,2.89L296.09.43,218.25,0,140.4.61,94.85,50.41l-8.11-2.87A48.33,48.33,0,0,0,36.19,59.3L5.62,90.05a6.73,6.73,0,0,0-1.36,7.47l11.47,25.56L0,165.92,56.47,380.64a89.7,89.7,0,0,0,34.7,50.23l111.68,75.69a24.73,24.73,0,0,0,30.89,0l111.62-75.8A88.86,88.86,0,0,0,380,380.53l46.07-176.14Z"/>
-                            <path class="cls-2-gaming" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1,14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
+                            <path class="cls-2-gaming" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1-14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
                         </svg>
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Brave</h2>
@@ -240,7 +247,7 @@
                 </div>
             </div>
 
-            <div id="workstation-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="workstation-pc" class="pc-category-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
                     <div class="bg-white rounded-full p-2 mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
@@ -292,13 +299,13 @@
                             </defs>
                             <title>brave-browser</title>
                             <path class="cls-1-workstation" d="M436.49,165.63,420.7,122.75l11-24.6A8.47,8.47,0,0,0,430,88.78L400.11,58.6a48.16,48.16,0,0,0-50.23-11.66l-8.19,2.89L296.09.43,218.25,0,140.4.61,94.85,50.41l-8.11-2.87A48.33,48.33,0,0,0,36.19,59.3L5.62,90.05a6.73,6.73,0,0,0-1.36,7.47l11.47,25.56L0,165.92,56.47,380.64a89.7,89.7,0,0,0,34.7,50.23l111.68,75.69a24.73,24.73,0,0,0,30.89,0l111.62-75.8A88.86,88.86,0,0,0,380,380.53l46.07-176.14Z"/>
-                            <path class="cls-2-workstation" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1,14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
+                            <path class="cls-2-workstation" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1-14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
                         </svg>
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Brave</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(32 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">32</span>
+                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(31 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">31</span>
                         </div>
                     </div>
                 </div>
@@ -309,8 +316,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Opera</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(30 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">30</span>
+                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(29 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">29</span>
                         </div>
                     </div>
                 </div>
@@ -336,7 +343,7 @@
                 </div>
             </div>
 
-            <div id="multimedia-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="multimedia-pc" class="pc-category-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
                     <div class="bg-white rounded-full p-2 mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
@@ -388,8 +395,8 @@
                             </defs>
                             <title>brave-browser</title>
                             <path class="cls-1-multimedia" d="M436.49,165.63,420.7,122.75l11-24.6A8.47,8.47,0,0,0,430,88.78L400.11,58.6a48.16,48.16,0,0,0-50.23-11.66l-8.19,2.89L296.09.43,218.25,0,140.4.61,94.85,50.41l-8.11-2.87A48.33,48.33,0,0,0,36.19,59.3L5.62,90.05a6.73,6.73,0,0,0-1.36,7.47l11.47,25.56L0,165.92,56.47,380.64a89.7,89.7,0,0,0,34.7,50.23l111.68,75.69a24.73,24.73,0,0,0,30.89,0l111.62-75.8A88.86,88.86,0,0,0,380,380.53l46.07-176.14Z"/>
-                            <path class="cls-2-multimedia" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1,14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
-                        </svg>
+                            <path class="cls-2-multimedia" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1-14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
+                            </svg>
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Brave</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
@@ -405,8 +412,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Opera</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(24 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">24</span>
+                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(25 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">25</span>
                         </div>
                     </div>
                 </div>
@@ -417,8 +424,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Firefox</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(20 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">20</span>
+                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(22 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">22</span>
                         </div>
                     </div>
                 </div>
@@ -432,7 +439,7 @@
                 </div>
             </div>
 
-            <div id="office-pc" class="content-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="office-pc" class="pc-category-section grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="content-card rounded-lg p-6 cursor-pointer flex flex-col items-center">
                     <div class="bg-white rounded-full p-2 mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-16 h-16 object-contain">
@@ -448,8 +455,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Edge</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(22 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">22</span>
+                        <div class="bg-cyan-500 h-full rounded-full flex items-center justify-center" style="width: calc(24 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">24</span>
                         </div>
                     </div>
                 </div>
@@ -460,8 +467,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Chrome</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(21 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">21</span>
+                        <div class="bg-yellow-500 h-full rounded-full flex items-center justify-center" style="width: calc(23 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">23</span>
                         </div>
                     </div>
                 </div>
@@ -484,13 +491,13 @@
                             </defs>
                             <title>brave-browser</title>
                             <path class="cls-1-office" d="M436.49,165.63,420.7,122.75l11-24.6A8.47,8.47,0,0,0,430,88.78L400.11,58.6a48.16,48.16,0,0,0-50.23-11.66l-8.19,2.89L296.09.43,218.25,0,140.4.61,94.85,50.41l-8.11-2.87A48.33,48.33,0,0,0,36.19,59.3L5.62,90.05a6.73,6.73,0,0,0-1.36,7.47l11.47,25.56L0,165.92,56.47,380.64a89.7,89.7,0,0,0,34.7,50.23l111.68,75.69a24.73,24.73,0,0,0,30.89,0l111.62-75.8A88.86,88.86,0,0,0,380,380.53l46.07-176.14Z"/>
-                            <path class="cls-2-office" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1,14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
+                            <path class="cls-2-office" d="M231,317.33a65.61,65.61,0,0,0-9.11-3.3h-5.49a66.08,66.08,0,0,0-9.11,3.3l-13.81,5.74-15.6,7.18-25.4,13.24a4.84,4.84,0,0,0-.62,9l22.06,15.49q7,5,13.55,10.76l6.21,5.35,13,11.37,5.89,5.2a10.15,10.15,0,0,0,12.95,0l25.39-22.18,13.6-10.77,22.06-15.79a4.8,4.8,0,0,0-.68-8.93l-25.36-12.8L244.84,323ZM387.4,175.2l.8-2.3a61.26,61.26,0,0,0-.57-9.18,73.51,73.51,0,0,0-8.19-15.44l-14.35-21.06-10.22-13.88-19.23-24a69.65,69.65,0,0,0-5.7-6.67h-.4L321,84.25l-42.27,8.14a33.49,33.49,0,0,1-12.59-1.84l-23.21-7.5-16.61-4.59a70.52,70.52,0,0,0-14.67,0L195,83.1l-23.21,7.54a33.89,33.89,0,0,1-12.59,1.84l-42.22-8-8.54-1.58h-.4a65.79,65.79,0,0,0-5.7,6.67l-19.2,24Q77.81,120.32,73,127.45L58.61,148.51l-6.78,11.31a51,51,0,0,0-1.94,13.35l.8,2.3A34.51,34.51,0,0,0,52,179.81l11.33,13,50.23,53.39a14.31,14.31,0,0,1,2.55,14.34L107.68,280a25.23,25.23,0,0,0-.39,16l1.64,4.52a43.58,43.58,0,0,0,13.39,18.76l7.89,6.43a15,15,0,0,0,14.35,1.72L172.62,314A70.38,70.38,0,0,0,187,304.52l22.46-20.27a9,9,0,0,0,3-6.36,9.08,9.08,0,0,0-2.5-6.56L159.2,237.18a9.83,9.83,0,0,1-3.09-12.45l19.66-36.95a19.21,19.21,0,0,0,1-14.67A22.37,22.37,0,0,0,165.58,163L103.94,139.8c-4.44-1.6-4.2-3.6.51-3.88l36.2-3.59a55.9,55.9,0,0,1,16.9,1.5l31.5,8.8a9.64,9.64,0,0,1,6.74,10.76L183.42,221a34.72,34.72,0,0,0-.61,11.41c.5,1.61,4.73,3.6,9.36,4.73l19.19,4a46.38,46.38,0,0,0,16.86,0l17.26-4c4.64-1,8.82-3.23,9.35-4.85a34.94,34.94,0,0,0-.63-11.4l-12.45-67.59a9.66,9.66,0,0,1,6.74-10.76l31.5-8.83a55.87,55.87,0,0,1,16.9-1.5l36.2,3.37c4.74.44,5,2.2.54,3.88L272,162.79a22.08,22.08,0,0,0-11.16,10.12,19.3,19.3,0,0,0,1-14.67l19.69,36.95A9.84,9.84,0,0,1,278.45,237l-50.66,34.23a9,9,0,0,0,.32,12.78l.15.14,22.49,20.27a71.46,71.46,0,0,0,14.35,9.47l28.06,13.35a14.89,14.89,0,0,0,14.34-1.76l7.9-6.45a43.53,43.53,0,0,0,13.38-18.8l1.65-4.52a25.27,25.27,0,0,0-.39-16l-8.26-19.49a14.4,14.4,0,0,1,2.55-14.35l50.23-53.45,11.3-13a35.8,35.8,0,0,0,1.54-4.24Z"/>
                         </svg>
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Brave</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(20 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">20</span>
+                        <div class="bg-orange-700 h-full rounded-full flex items-center justify-center" style="width: calc(21 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">21</span>
                         </div>
                     </div>
                 </div>
@@ -501,8 +508,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Opera</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(18 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">18</span>
+                        <div class="bg-red-500 h-full rounded-full flex items-center justify-center" style="width: calc(20 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">20</span>
                         </div>
                     </div>
                 </div>
@@ -513,8 +520,8 @@
                     </div>
                     <h2 class="text-xl font-semibold mb-2">Firefox</h2>
                     <div class="w-full bg-white rounded-full h-8 flex items-end overflow-hidden mt-2">
-                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(15 / 50 * 100%);">
-                            <span class="text-lg font-bold text-white">15</span>
+                        <div class="bg-orange-500 h-full rounded-full flex items-center justify-center" style="width: calc(18 / 50 * 100%);">
+                            <span class="text-lg font-bold text-white">18</span>
                         </div>
                     </div>
                 </div>
@@ -530,79 +537,114 @@
         </div>
     </header>
 
-    <main class="flex-grow container mx-auto px-4 py-8">
-        <section class="mb-12">
-            <h2 class="text-3xl font-bold text-center mb-8 text-indigo-800">Proč je Speedometer 3.1 důležitý?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="info-card p-6">
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div id="more-info-section" class="blog-info-section grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="info-card">
+                <div class="info-card-content">
+                    <h3>O Speedometeru 3.1</h3>
+                    <p>Speedometer 3.1 je nejnovější verzí benchmarku pro měření odezvy webových aplikací. Simuluje uživatelské interakce s webovými aplikacemi, jako je přidávání položek do seznamu úkolů, archivace poznámek nebo úpravy textu, a měří, jak rychle prohlížeč reaguje na tyto akce.</p>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="info-card-content">
+                    <h3>Proč je výkon prohlížeče důležitý?</h3>
+                    <p>Rychlý a efektivní prohlížeč zlepšuje vaši produktivitu a celkový uživatelský zážitek. Pomáhá snižovat spotřebu energie a prodlužuje životnost baterie u přenosných zařízení. Optimalizovaný prohlížeč je klíčový pro plynulé procházení webu a práci s náročnými webovými aplikacemi.</p>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="info-card-content">
                     <h3>Realistické scénáře</h3>
-                    <p class="mt-2">Speedometer 3.1 simuluje reálné uživatelské interakce, jako je přidávání položek do seznamů úkolů, úpravy textu a manipulace s daty. To poskytuje přesnější obraz o tom, jak se prohlížeč chová při každodenním používání.</p>
+                    <p>Speedometer 3.1 simuluje reálné uživatelské interakce, jako je přidávání položek do seznamů úkolů, úpravy textu a manipulace s daty. To poskytuje přesnější obraz o tom, jak se prohlížeč chová při každodenním používání.</p>
                 </div>
-                <div class="info-card p-6">
+            </div>
+            <div class="info-card">
+                <div class="info-card-content">
                     <h3>Vývojářské nástroje</h3>
-                    <p class="mt-2">Test zahrnuje simulace interakcí s populárními frameworky a knihovnami, jako jsou React, Angular a Vue.js, což je klíčové pro vývojáře webových aplikací.</p>
+                    <p>Test zahrnuje simulace interakcí s populárními frameworky a knihovnami, jako jsou React, Angular a Vue.js, což je klíčové pro vývojáře webových aplikací.</p>
                 </div>
-                <div class="info-card p-6">
+            </div>
+            <div class="info-card">
+                <div class="info-card-content">
                     <h3>Komplexní měření</h3>
-                    <p class="mt-2">Měří dobu odezvy prohlížeče na různé akce, což pomáhá identifikovat úzká hrdla a optimalizovat výkon webových stránek.</p>
+                    <p>Měří dobu odezvy prohlížeče na různé akce, což pomáhá identifikovat úzká hrdla a optimalizovat výkon webových stránek.</p>
                 </div>
             </div>
-        </section>
+            <div class="info-card">
+                <div class="info-card-content">
+                    <h3>Jak interpretovat výsledky</h3>
+                    <p>Vyšší skóre v testu Speedometer 3.1 znamená lepší výkon. Skóre představuje počet operací za minutu, které prohlížeč dokáže provést. Je důležité si uvědomit, že výsledky se mohou lišit v závislosti na hardwaru vašeho zařízení a dalších spuštěných aplikacích.</p>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="info-card-content">
+                    <h3>Kontaktujte nás</h3>
+                    <p>Máte dotazy nebo připomínky k našim testům? Neváhejte nás kontaktovat prostřednictvím našeho formuláře nebo e-mailu. Jsme rádi za jakoukoli zpětnou vazbu, která nám pomůže zlepšit naše služby.</p>
+                </div>
+            </div>
+        </div>
 
-        <section>
-            <h2 class="text-3xl font-bold text-center mb-8 text-indigo-800">Nejnovější články a analýzy</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="blog-card">
-                    <img src="https://placehold.co/400x180/7e22ce/ffffff?text=Performance+Tips" alt="Performance Tips">
-                    <div class="blog-card-content">
-                        <h3>Jak optimalizovat prohlížeč pro maximální výkon</h3>
-                        <p class="mt-2">Prozkoumejte tipy a triky, jak nastavit svůj prohlížeč pro nejlepší možný výkon. Od rozšíření po nastavení soukromí, vše, co potřebujete vědět.</p>
-                        <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
-                    </div>
-                </div>
-                <div class="blog-card">
-                    <img src="https://placehold.co/400x180/7e22ce/ffffff?text=Browser+Comparison" alt="Browser Comparison">
-                    <div class="blog-card-content">
-                        <h3>Chrome vs. Edge: Který prohlížeč vede v roce 2024?</h3>
-                        <p class="mt-2">Podrobná analýza a srovnání dvou nejpopulárnějších prohlížečů na základě nejnovějších testů a uživatelských zkušeností.</p>
-                        <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
-                    </div>
-                </div>
-                <div class="blog-card">
-                    <img src="https://placehold.co/400x180/7e22ce/ffffff?text=Future+of+Browsers" alt="Future of Browsers">
-                    <div class="blog-card-content">
-                        <h3>Budoucnost webových prohlížečů: Co nás čeká?</h3>
-                        <p class="mt-2">Pohled do budoucna webových prohlížečů, nové technologie a inovace, které změní způsob, jakým surfujeme po internetu.</p>
-                        <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
-                    </div>
+        <div id="blog-section" class="blog-info-section grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="blog-card">
+                <img src="https://placehold.co/600x300/4338CA/FFFFFF?text=Novinky+ve+Speedometeru+3.1" alt="Novinky ve Speedometeru 3.1">
+                <div class="blog-card-content">
+                    <h3>Novinky ve Speedometeru 3.1</h3>
+                    <p>Zjistěte, co je nového v nejnovější verzi testu Speedometer a jak ovlivňuje měření výkonu prohlížečů.</p>
+                    <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
                 </div>
             </div>
-        </section>
+            <div class="blog-card">
+                <img src="https://placehold.co/600x300/4338CA/FFFFFF?text=Jak+testujeme+prohlížeče" alt="Jak testujeme prohlížeče">
+                <div class="blog-card-content">
+                    <h3>Jak testujeme prohlížeče</h3>
+                    <p>Podrobný pohled na metodologii našeho testování a faktory, které ovlivňují skóre prohlížečů.</p>
+                    <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
+                </div>
+            </div>
+            <div class="blog-card">
+                <img src="https://placehold.co/600x300/4338CA/FFFFFF?text=Optimalizace+výkonu+prohlížeče" alt="Optimalizace výkonu prohlížeče">
+                <div class="blog-card-content">
+                    <h3>Tipy pro optimalizaci výkonu prohlížeče</h3>
+                    <p>Praktické rady, jak zlepšit rychlost a odezvu vašeho oblíbeného webového prohlížeče.</p>
+                    <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
+                </div>
+            </div>
+            <div class="blog-card">
+                <img src="https://placehold.co/600x300/4338CA/FFFFFF?text=Budoucnost+webových+prohlížečů" alt="Budoucnost webových prohlížečů">
+                <div class="blog-card-content">
+                    <h3>Budoucnost webových prohlížečů</h3>
+                    <p>Prozkoumejte nadcházející trendy a inovace, které formují budoucnost webového prohlížení.</p>
+                    <a href="#" class="text-indigo-600 hover:underline mt-4 inline-block">Číst více</a>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer class="w-full bg-gray-800 text-white text-center p-4 mt-8">
+    <footer class="w-full bg-gray-800 text-white text-center py-6 mt-auto">
         <p>&copy; 2024 Web Browser Performance Speedometer. Všechna práva vyhrazena.</p>
     </footer>
 
     <script>
+        // Funkce pro zobrazení vybrané kategorie PC a skrytí ostatních
         function showCategory(categoryId) {
-            // Skrytí všech obsahových sekcí
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.style.display = 'none';
+            // Získání všech sekcí obsahu PC kategorií
+            const pcSections = document.querySelectorAll('.pc-category-section');
+            pcSections.forEach(section => {
+                section.style.display = 'none'; // Skrytí všech PC sekcí
             });
 
-            // Odebrání aktivní třídy ze všech tlačítek
-            document.querySelectorAll('.header-button').forEach(button => {
-                button.classList.remove('active-button');
+            // Získání všech tlačítek záhlaví
+            const headerButtons = document.querySelectorAll('.header-button');
+            headerButtons.forEach(button => {
+                button.classList.remove('active-button'); // Odebrání aktivní třídy ze všech tlačítek
             });
 
-            // Zobrazení vybrané obsahové sekce
+            // Zobrazení vybrané PC sekce
             const selectedSection = document.getElementById(categoryId);
             if (selectedSection) {
-                selectedSection.style.display = 'grid'; // Použití grid pro rozložení
+                selectedSection.style.display = 'grid'; // Zobrazení vybrané PC sekce jako grid
             }
 
-            // Přidání aktivní třídy k kliknutému tlačítku
+            // Přidání aktivní třídy na kliknuté tlačítko
             const clickedButton = document.getElementById(categoryId + '-btn');
             if (clickedButton) {
                 clickedButton.classList.add('active-button');
@@ -611,7 +653,7 @@
 
         // Zobrazení výchozí kategorie při načtení stránky
         document.addEventListener('DOMContentLoaded', () => {
-            showCategory('gaming-pc');
+            showCategory('gaming-pc'); // Výchozí zobrazení "gaming-pc"
         });
     </script>
 </body>
