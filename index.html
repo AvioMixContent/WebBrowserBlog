@@ -115,9 +115,9 @@
         /* Styl pro progress bar a číslo uvnitř */
         .progress-bar-container {
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.3); /* Tmavší pozadí pro lepší kontrast */
+            background-color: white; /* Změněno na bílou barvu */
             border-radius: 9999px; /* Tailwind's rounded-full */
-            height: 2.5rem; /* Větší výška pro zobrazení čísla */
+            height: 1.5rem; /* Nižší výška */
             display: flex;
             align-items: center;
             overflow: hidden; /* Důležité pro zaoblení uvnitř */
@@ -130,13 +130,14 @@
             border-radius: 9999px; /* Zaoblení i pro výplň */
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end; /* Zarovnání textu na konec */
+            padding-right: 0.75rem; /* Odsazení textu od okraje */
             transition: width 0.5s ease-in-out;
             color: white; /* Barva textu uvnitř */
             font-weight: bold;
-            font-size: 1.25rem; /* Větší písmo pro skóre */
+            font-size: 1rem; /* Menší písmo pro skóre */
             min-width: 3rem; /* Zajištění, že číslo bude viditelné i při nízkých hodnotách */
-            position: absolute;
+            position: absolute; /* Aby se překrýval s pozadím */
             left: 0;
             top: 0;
         }
@@ -145,9 +146,9 @@
             position: absolute;
             width: 100%;
             text-align: center;
-            color: white; /* Text je vždy bílý */
+            color: gray; /* Barva textu pro "Netestováno" */
             font-weight: bold;
-            font-size: 1.25rem;
+            font-size: 1rem; /* Menší písmo */
             z-index: 10; /* Aby byl text nad barem */
             display: flex;
             align-items: center;
@@ -532,7 +533,19 @@
             const section = document.getElementById(category);
             section.innerHTML = ''; // Vyčistí předchozí obsah
 
+            // Přidáno pro ladění: Zkontrolujte, zda pcCategoriesData existuje a jak vypadá
+            console.log("pcCategoriesData:", pcCategoriesData);
+            console.log("Category requested:", category);
+
             const data = pcCategoriesData[category];
+            
+            // Přidána robustní kontrola pro data
+            if (!data || !Array.isArray(data)) {
+                console.error(`Chyba: Data pro kategorii '${category}' jsou nedefinovaná nebo nejsou pole. Nelze generovat obsah.`);
+                section.innerHTML = `<p class="text-white text-center p-4">Chyba: Data pro tuto kategorii nejsou dostupná.</p>`;
+                return; // Zastaví provádění, pokud jsou data neplatná
+            }
+
             const maxScore = 50; // Předpokládané maximální skóre pro normalizaci grafu
 
             data.forEach(browser => {
@@ -546,11 +559,13 @@
                     const percentage = (browser.score / maxScore) * 100;
                     progressBarHtml = `
                         <div class="progress-bar-container">
-                            <div class="progress-bar-fill bg-${browser.color}" style="width: ${percentage}%;"></div>
-                            <div class="progress-bar-text-overlay">${browser.score}</div>
-                        </div>
+                            <div class="progress-bar-fill bg-${browser.color}" style="width: ${percentage}%;">
+                                ${browser.score}
+                            </div>
+                            </div>
                     `;
                 } else {
+                    // Pro "Netestováno" se zobrazí text uprostřed bílého pruhu
                     progressBarHtml = `
                         <div class="progress-bar-container">
                             <div class="progress-bar-text-overlay text-gray-400">${browser.score}</div>
