@@ -156,11 +156,41 @@
             height: 100%;
         }
 
+        /* Styly pro pozadí s HTML tagy */
+        #html-tags-background {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 1; /* Mezi černým overlayem a obsahem */
+            pointer-events: none; /* Aby neblokovalo klikání na tlačítka */
+        }
+
+        #html-tags-background span {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.15); /* Zvýšená průhlednost */
+            font-size: 5rem; /* Větší tagy */
+            font-weight: bold;
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+            animation: floatContinuous 30s infinite linear; /* Nová animace */
+        }
+
+        @keyframes floatContinuous {
+            0% {
+                transform: translateY(100vh) rotate(0deg); /* Začíná dole */
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg); /* Pohyb nahoru přes celou výšku */
+            }
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
     <header class="w-full min-h-screen flex flex-col items-center justify-between text-white text-center px-8 pb-8 bg-gradient-to-br from-indigo-700 to-purple-900 shadow-xl relative overflow-hidden">
+        <div id="html-tags-background"></div>
         <div class="absolute inset-0 bg-black opacity-30"></div>
         <div class="relative z-10 w-full flex flex-col items-center h-full">
             <div class="w-full flex justify-between items-center pt-8 px-4">
@@ -288,7 +318,7 @@
                 </div>
             </div>
             <div class="blog-card">
-                <div class="blog-card-content">
+                <div class="blog-post-header">
                     <h3>Tipy a triky pro plynulé procházení webu</h3>
                 </div>
                 <div class="blog-card-content">
@@ -472,12 +502,32 @@
             });
         }
 
+        // Funkce pro generování pozadí s HTML tagy
+        function generateHtmlTagsBackground() {
+            const backgroundContainer = document.getElementById('html-tags-background');
+            const tags = ['<html>', '<body>', '<head>', '<div>', '<p>', '<a>', '<img>', '<script>', '<style>', '<meta>', '<link>', '<title>', '<header>', '<main>', '<footer>', '<span>', '<button>', '<section>', '<h3>', '<br>', '<h1>', '<h2>', '<ul>', '<li>', '<table>', '<tr>', '<td>', '<form>', '<input>', '<select>', '<option>', '<textarea>', '<nav>', '<article>', '<aside>', '<figure>', '<figcaption>', '<video>', '<audio>', '<source>', '<canvas>', '<svg>']; // Více tagů
+            const numberOfTags = 100; // Zvýšený počet tagů
+
+            for (let i = 0; i < numberOfTags; i++) {
+                const tagSpan = document.createElement('span');
+                tagSpan.textContent = tags[Math.floor(Math.random() * tags.length)];
+                tagSpan.style.left = `${Math.random() * 100}vw`; // Náhodná pozice X
+                tagSpan.style.top = `${Math.random() * 200 - 100}vh`; // Náhodná pozice Y (může začínat i mimo obrazovku)
+                tagSpan.style.animationDuration = `${20 + Math.random() * 10}s`; // Náhodná délka animace
+                tagSpan.style.animationDelay = `${Math.random() * 10}s`; // Náhodné zpoždění animace
+                tagSpan.style.transform = `rotate(${Math.random() * 360}deg)`; // Náhodná rotace
+                backgroundContainer.appendChild(tagSpan);
+            }
+        }
+
+
         // Vloží logo webu do záhlaví
         document.getElementById('website-logo-container').innerHTML = websiteLogoSVG;
 
-        // Zobrazí výchozí kategorii při načtení stránky
+        // Zobrazí výchozí kategorii a vygeneruje pozadí s HTML tagy při načtení stránky
         document.addEventListener('DOMContentLoaded', () => {
             showCategory('gaming-pc'); // Výchozí kategorie
+            generateHtmlTagsBackground(); // Generování pozadí s HTML tagy
         });
     </script>
 </body>
